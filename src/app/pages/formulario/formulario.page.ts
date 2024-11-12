@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ServiciodbService } from 'src/app/services/serviciodb.service';
 
 @Component({
   selector: 'app-formulario',
@@ -7,9 +8,30 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FormularioPage implements OnInit {
 
-  constructor() { }
 
-  ngOnInit() {
+  rut: string = '';
+  nombre: string = '';
+  apellidop: string = '';
+  apellidom: string = '';
+  correo: string = '';
+
+  constructor(private dbService: ServiciodbService) { }
+
+
+  async ngOnInit() {
+    await this.dbService.initDB();
   }
 
+
+  async addStudent(event: Event){
+    event.preventDefault();
+
+    await this.dbService.addItem(this.rut, this.nombre, this.apellidop, this.apellidom, this.correo);
+
+    this.rut = '';
+    this.nombre = '';
+    this.apellidop = '';
+    this.apellidom = '';
+    this.correo = '';
+  }
 }
