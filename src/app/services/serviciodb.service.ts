@@ -15,12 +15,15 @@ readonly db_name: string = "estudiantes.db";
 
 private sqlite: SQLiteConnection;
 
+private isInitialized: boolean = false;
 constructor() {
   this.sqlite = new SQLiteConnection(CapacitorSQLite);
 }
 
   // Inicializar la base de datos
   async initDB() {
+    if(this.isInitialized) return;
+
     try {  
       // Crea la conexión a la base de datos
       this.db = await this.sqlite.createConnection(
@@ -45,6 +48,7 @@ constructor() {
         );
       `;
       await this.db.execute(createTableQuery);
+      this.isInitialized = true;
       console.log('Base de datos inicializada');
     } catch (e) {
       console.error('Error al inicializar la base de datos', e);
@@ -68,9 +72,31 @@ constructor() {
     } catch (error) {
       console.error('Error al agregar el estudiante', error);
     }
+  }
+
+  async getAllStudents(): Promise<any[]>{
+    try {
+        const SelectQuery=  `Select * from ${this.db_table};`;
+        const res = await this.db.query(SelectQuery);
+        return res.values? res.values : [];      
+    } catch (error) {
+      console.error("Error al Obtener los estudiantes", error);
+      return[]
+    }
 
   }
 
+
+  async deleteStudent(id: number){
+      try {
+        const deletequery = `DELETE FROM ${this.db_table} WHERE id = ?;`;
+        await this.db.run(deletequery, [id]);
+        console.log("Estudiantes Eliminado");
+      } catch (error) {
+        console.error("Error al Eliminar el estudiantes", error);
+      }
+
+  }
 
 
 

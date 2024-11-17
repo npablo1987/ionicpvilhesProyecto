@@ -14,6 +14,14 @@ const routes: Routes = [
   {
     path: 'formulario',
     loadChildren: () => import('./pages/formulario/formulario.module').then( m => m.FormularioPageModule)
+  },
+  {
+    path: 'verestudiantes',
+    loadChildren: () => import('./pages/verestudiantes/verestudiantes.module').then( m => m.VerestudiantesPageModule)
+  },
+  {
+    path: 'ubicacion',
+    loadChildren: () => import('./pages/ubicacion/ubicacion.module').then( m => m.UbicacionPageModule)
   }
 ];
 

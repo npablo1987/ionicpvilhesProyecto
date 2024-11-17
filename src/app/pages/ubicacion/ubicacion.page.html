@@ -1,0 +1,23 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+     <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+     </ion-buttons>
+     <ion-title>Formulario</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-card *ngIf="latidude && longitude && city">
+      <ion-card-header>
+        <ion-card-title>Ubicacion:</ion-card-title>
+      </ion-card-header>
+    <ion-card-content>
+        <p>Latitud {{latidude}}</p>
+        <p>longitude {{longitude}}</p>
+        <p>city {{city}}</p>
+    </ion-card-content>
+    </ion-card>
+      <p *ngIf="error"> Error: {{error}}</p>
+      <p *ngIf="!latidude && !longitude && !city"> Cargando.. ubicacion....</p>
+</ion-content>
